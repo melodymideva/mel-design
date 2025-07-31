@@ -98,7 +98,7 @@ const products: ProductProps[] = [
     id: 5,
     name: 'Striped T-Shirt',
     price: '$24.99',
-    image: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.amazon.com%2FZengjo-Mens-Striped-Shirt%2Fdp%2FB07SQQ7ZMH&psig=AOvVaw0NibPclZZmI7vvtqE50uWJ&ust=1753706387678000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCMiP3cWH3Y4DFQAAAAAdAAAAABAE',
+    image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
     sizes: ['S', 'M', 'L', 'XL'],
     category: 'Tops',
     rating: 4.0,
@@ -229,96 +229,87 @@ function ProductCard({ product, onAddToCart, onToggleWishlist, isWishlisted }: {
   };
 
   return (
-    <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 group relative overflow-hidden">
+    <div className="bg-white rounded-xl p-3 shadow-lg hover:shadow-xl transition-all duration-300 group relative overflow-hidden max-w-sm mx-auto">
       {/* Badges */}
-      <div className="absolute top-4 left-4 z-10 flex flex-col gap-2">
+      <div className="absolute top-2 left-2 z-10 flex flex-col gap-1">
         {product.isNew && (
-          <span className="bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold">NEW</span>
+          <span className="bg-green-500 text-white px-2 py-0.5 rounded-full text-xs font-bold">NEW</span>
         )}
         {product.isSale && (
-          <span className="bg-red-500 text-white px-3 py-1 rounded-full text-xs font-bold">SALE</span>
+          <span className="bg-red-500 text-white px-2 py-0.5 rounded-full text-xs font-bold">SALE</span>
         )}
       </div>
 
       {/* Wishlist Button */}
       <button
         onClick={() => onToggleWishlist(product.id)}
-        className="absolute top-4 right-4 z-10 p-2 bg-white rounded-full shadow-md hover:shadow-lg transition-all"
+        className="absolute top-2 right-2 z-10 p-1.5 bg-white rounded-full shadow-md hover:shadow-lg transition-all"
       >
-        <Heart className="w-5 h-5 text-pink-500" filled={isWishlisted} />
+        <Heart className="w-4 h-4 text-pink-500" filled={isWishlisted} />
       </button>
 
       {/* Product Image */}
-      <div className="relative overflow-hidden rounded-xl mb-4">
+      <div className="relative overflow-hidden rounded-lg mb-2">
         <img 
           src={product.image} 
           alt={product.name} 
-          className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300" 
+          className="w-full h-32 object-cover group-hover:scale-105 transition-transform duration-300" 
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       </div>
 
       {/* Product Info */}
-      <div className="space-y-3">
-        <div className="flex justify-between items-start">
-          <h3 className="text-lg font-semibold text-gray-800 group-hover:text-pink-600 transition-colors">
+      <div className="space-y-1">
+        <div className="flex justify-between items-start gap-2">
+          <h3 className="text-xs font-semibold text-gray-800 group-hover:text-pink-600 transition-colors leading-tight flex-1">
             {product.name}
           </h3>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-0.5 shrink-0">
             {renderStars(product.rating)}
-            <span className="text-sm text-gray-500 ml-1">({product.rating})</span>
           </div>
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="text-xl font-bold text-pink-600">{product.price}</span>
+          <span className="text-sm font-bold text-pink-600">{product.price}</span>
           {product.originalPrice && (
-            <span className="text-sm text-gray-400 line-through">{product.originalPrice}</span>
+            <span className="text-xs text-gray-400 line-through">{product.originalPrice}</span>
           )}
         </div>
 
-        <p className="text-sm text-gray-500 capitalize">{product.category}</p>
-
         {/* Color Selection */}
         {product.colors && (
-          <div className="space-y-2">
-            <p className="text-sm font-medium text-gray-700">Color:</p>
-            <div className="flex flex-wrap gap-2">
-              {product.colors.map((color) => (
-                <button
-                  key={color}
-                  onClick={() => setSelectedColor(color)}
-                  className={`px-3 py-1 text-xs rounded-lg border transition-all ${
-                    selectedColor === color 
-                      ? 'bg-purple-100 border-purple-500 text-purple-700' 
-                      : 'bg-gray-50 border-gray-200 text-gray-600 hover:border-purple-300'
-                  }`}
-                >
-                  {color}
-                </button>
-              ))}
-            </div>
+          <div className="flex flex-wrap gap-1">
+            {product.colors.map((color) => (
+              <button
+                key={color}
+                onClick={() => setSelectedColor(color)}
+                className={`px-1.5 py-0.5 text-xs rounded border transition-all ${
+                  selectedColor === color 
+                    ? 'bg-purple-100 border-purple-500 text-purple-700' 
+                    : 'bg-gray-50 border-gray-200 text-gray-600 hover:border-purple-300'
+                }`}
+              >
+                {color}
+              </button>
+            ))}
           </div>
         )}
 
         {/* Size Selection */}
-        <div className="space-y-2">
-          <p className="text-sm font-medium text-gray-700">Size:</p>
-          <div className="flex flex-wrap gap-2">
-            {product.sizes.map((size) => (
-              <button
-                key={size}
-                onClick={() => setSelectedSize(size)}
-                className={`w-10 h-10 rounded-lg border font-medium text-sm transition-all ${
-                  selectedSize === size 
-                    ? 'bg-purple-500 border-purple-500 text-white' 
-                    : 'bg-white border-gray-200 text-gray-600 hover:border-purple-300 hover:text-purple-500'
-                }`}
-              >
-                {size}
-              </button>
-            ))}
-          </div>
+        <div className="flex flex-wrap gap-1">
+          {product.sizes.map((size) => (
+            <button
+              key={size}
+              onClick={() => setSelectedSize(size)}
+              className={`w-6 h-6 rounded border font-medium text-xs transition-all ${
+                selectedSize === size 
+                  ? 'bg-purple-500 border-purple-500 text-white' 
+                  : 'bg-white border-gray-200 text-gray-600 hover:border-purple-300 hover:text-purple-500'
+              }`}
+            >
+              {size}
+            </button>
+          ))}
         </div>
 
         {/* Add to Cart Button */}
@@ -336,9 +327,9 @@ function ProductCard({ product, onAddToCart, onToggleWishlist, isWishlisted }: {
               alert('Please select a size!');
             }
           }}
-          className="w-full mt-4 py-3 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 text-white rounded-xl font-bold hover:shadow-lg transform hover:scale-105 transition-all duration-200 flex items-center justify-center gap-2"
+          className="w-full mt-1 py-1.5 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 text-white rounded-lg font-medium hover:shadow-lg transform hover:scale-105 transition-all duration-200 flex items-center justify-center gap-1 text-xs"
         >
-          <ShoppingCart className="w-5 h-5" />
+          <ShoppingCart className="w-3 h-3" />
           Add to Cart
         </button>
       </div>
@@ -552,7 +543,7 @@ export default function ProductsPage() {
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex justify-between items-center">
             <h1 className="text-3xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent">
-              Fashion Store ✨
+              Mel Designs ✨
             </h1>
             
             <div className="flex items-center gap-4">
@@ -626,7 +617,7 @@ export default function ProductsPage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {filteredProducts.map((product) => (
                 <ProductCard 
                   key={product.id} 
